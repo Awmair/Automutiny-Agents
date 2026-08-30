@@ -1,0 +1,22 @@
+{
+  "name": "@automutiny/seed",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "seed": "node --env-file=../../apps/web/.env.local --import tsx src/cli.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@automutiny/db": "workspace:*",
+    "@supabase/supabase-js": "^2.57.4"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.1",
+    "tsx": "^4.20.5",
+    "typescript": "5.9.3"
+  }
+}

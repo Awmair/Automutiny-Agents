@@ -1,0 +1,22 @@
+name: Production health check
+
+permissions:
+  contents: read
+
+on:
+  schedule:
+    - cron: "17 15 * * *"
+  workflow_dispatch:
+
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check configured production health endpoint
+        if: ${{ vars.HEALTHCHECK_URL != '' }}
+        env:
+          HEALTHCHECK_URL: ${{ vars.HEALTHCHECK_URL }}
+        run: curl --fail --silent --show-error --max-time 20 "$HEALTHCHECK_URL"
+      - name: Explain inactive check
+        if: ${{ vars.HEALTHCHECK_URL == '' }}
+        run: echo "Set the HEALTHCHECK_URL repository variable after production deployment."

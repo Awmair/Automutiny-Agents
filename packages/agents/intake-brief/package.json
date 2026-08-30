@@ -1,0 +1,25 @@
+{
+  "name": "@automutiny/intake-brief-agent",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./ui": "./src/ui/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@automutiny/agent-runtime": "workspace:*",
+    "@automutiny/db": "workspace:*",
+    "@supabase/supabase-js": "^2.57.4",
+    "react": "19.0.8",
+    "zod": "4.5.4"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.1",
+    "@types/react": "19.0.14",
+    "typescript": "5.9.3"
+  }
+}

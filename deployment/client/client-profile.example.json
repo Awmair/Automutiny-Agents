@@ -1,0 +1,13 @@
+{
+  "firm_name": "Example Professional Services Firm",
+  "public_domain": "https://agents.example.com",
+  "accepted_work": ["practice area or service line"],
+  "accepted_geography": ["state or region"],
+  "human_approvers": ["role responsible for final approval"],
+  "source_systems": ["CRM or matter system"],
+  "service_levels": {
+    "client_contact_days": 14,
+    "overdue_task_days": 1,
+    "unreturned_document_days": 14
+  }
+}

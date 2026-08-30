@@ -1,0 +1,14 @@
+node_modules/
+.pnpm-store/
+.next/
+coverage/
+dist/
+tmp/
+supabase/.temp/
+.vercel/
+.DS_Store
+*.tsbuildinfo
+.env
+.env.local
+.env.*.local
+!.env.example
