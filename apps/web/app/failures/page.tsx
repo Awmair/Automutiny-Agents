@@ -28,8 +28,8 @@ export default function FailuresPage() {
   return (
     <main className="failure-page">
       <div className="container">
-        <Link className="failure-back" href="/">
-          ← Agents
+        <Link className="failure-back" href="/legal">
+          ← Legal agents
         </Link>
         <header className="failure-head">
           <div>

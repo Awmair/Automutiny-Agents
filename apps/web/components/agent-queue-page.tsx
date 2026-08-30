@@ -46,8 +46,8 @@ export function AgentQueuePage({
             </span>
           </Link>
           <span className="queue-firm">Briar &amp; Calder LLP</span>
-          <Link className="button button-small" href="/">
-            All agents
+          <Link className="button button-small" href="/legal">
+            Legal agents
           </Link>
         </div>
       </header>

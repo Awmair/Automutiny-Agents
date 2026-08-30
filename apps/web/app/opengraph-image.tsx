@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Automutiny legal operations agents";
+export const alt = "Automutiny agents for accounting, legal and logistics";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -35,15 +35,15 @@ export default function OpenGraphImage() {
           HUMAN-CONTROLLED AGENTS
         </div>
         <div style={{ maxWidth: 920, fontSize: 72, lineHeight: 1.04, letterSpacing: -3 }}>
-          Three legal agents. Real work. Human authority.
+          Lean agents that do real work. Humans stay in control.
         </div>
       </div>
       <div style={{ display: "flex", gap: 18, fontSize: 24, color: "#626267" }}>
-        <span>Intake brief</span>
+        <span>Accounting</span>
         <span>•</span>
-        <span>Document routing</span>
+        <span>Legal</span>
         <span>•</span>
-        <span>Stalled work</span>
+        <span>Logistics</span>
       </div>
     </div>,
     size,

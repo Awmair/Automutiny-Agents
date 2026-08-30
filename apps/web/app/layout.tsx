@@ -5,18 +5,21 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
-  title: "Legal Operations Agents | Automutiny",
+  title: {
+    default: "Automutiny Agents",
+    template: "%s | Automutiny",
+  },
   description:
-    "Three inspectable AI agents that prepare legal operations work and stop for human decisions.",
+    "Lean, cost-controlled AI agents for accounting, legal and logistics workflows. Agents prepare. Humans decide.",
   openGraph: {
-    title: "Legal Operations Agents | Automutiny",
-    description: "Three inspectable agents. Human authority over every decision.",
+    title: "Automutiny Agents",
+    description: "Lean agents that do real work. Humans stay in control.",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Legal Operations Agents | Automutiny",
-    description: "Three inspectable agents. Human authority over every decision.",
+    title: "Automutiny Agents",
+    description: "Lean agents that do real work. Humans stay in control.",
   },
 };
 
