@@ -1,5 +1,4 @@
 import { randomUUID } from "node:crypto";
-import { readFile } from "node:fs/promises";
 import {
   callStructured,
   defaultGroqModel,
@@ -12,6 +11,7 @@ import { createServerDatabaseClient } from "@automutiny/db";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { extractText } from "unpdf";
 
+import { readDocumentFixture } from "./fixture";
 import { type Classification, ClassificationSchema, MatchSchema } from "./schemas";
 
 type Options = { client?: SupabaseClient; model?: string };
@@ -97,10 +97,7 @@ export async function runDocumentRouting(documentId: string, options: Options = 
     let bytes: Uint8Array;
     const download = await client.storage.from("agent-documents").download(document.storage_path);
     if (!download.error && download.data) bytes = new Uint8Array(await download.data.arrayBuffer());
-    else
-      bytes = new Uint8Array(
-        await readFile(new URL(`../fixtures/pdfs/${document.filename}`, import.meta.url)),
-      );
+    else bytes = await readDocumentFixture(document.filename);
     const extracted = await extractText(bytes, { mergePages: false });
     const pages = extracted.text as string[];
     const pdfText = pages.join("\n\n");

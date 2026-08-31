@@ -3,6 +3,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   outputFileTracingRoot: fileURLToPath(new URL("../..", import.meta.url)),
+  outputFileTracingIncludes: {
+    "/api/run/document": ["../../packages/agents/document-routing/fixtures/pdfs/**/*.pdf"],
+  },
   transpilePackages: [
     "@automutiny/db",
     "@automutiny/agent-runtime",
