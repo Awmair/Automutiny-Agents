@@ -23,6 +23,21 @@ importers:
 
   apps/web:
     dependencies:
+      '@automutiny/accounting-document-chase-agent':
+        specifier: workspace:*
+        version: link:../../packages/agents/accounting-document-chase
+      '@automutiny/accounting-filing-readiness-agent':
+        specifier: workspace:*
+        version: link:../../packages/agents/accounting-filing-readiness
+      '@automutiny/accounting-transaction-review-agent':
+        specifier: workspace:*
+        version: link:../../packages/agents/accounting-transaction-review
+      '@automutiny/agent-runtime':
+        specifier: workspace:*
+        version: link:../../packages/agents/shared-runtime
+      '@automutiny/agent-ui':
+        specifier: workspace:*
+        version: link:../../packages/agents/shared-ui
       '@automutiny/db':
         specifier: workspace:*
         version: link:../../packages/db
@@ -32,6 +47,15 @@ importers:
       '@automutiny/intake-brief-agent':
         specifier: workspace:*
         version: link:../../packages/agents/intake-brief
+      '@automutiny/logistics-invoice-reconciliation-agent':
+        specifier: workspace:*
+        version: link:../../packages/agents/logistics-invoice-reconciliation
+      '@automutiny/logistics-load-exception-agent':
+        specifier: workspace:*
+        version: link:../../packages/agents/logistics-load-exception
+      '@automutiny/logistics-pod-verification-agent':
+        specifier: workspace:*
+        version: link:../../packages/agents/logistics-pod-verification
       '@automutiny/stalled-work-agent':
         specifier: workspace:*
         version: link:../../packages/agents/stalled-work
@@ -72,6 +96,81 @@ importers:
       tailwindcss:
         specifier: 4.3.3
         version: 4.3.3
+      typescript:
+        specifier: 5.9.3
+        version: 5.9.3
+
+  packages/agents/accounting-document-chase:
+    dependencies:
+      '@automutiny/agent-runtime':
+        specifier: workspace:*
+        version: link:../shared-runtime
+      '@automutiny/agent-ui':
+        specifier: workspace:*
+        version: link:../shared-ui
+      '@automutiny/db':
+        specifier: workspace:*
+        version: link:../../db
+      react:
+        specifier: 19.0.8
+        version: 19.0.8
+    devDependencies:
+      '@types/node':
+        specifier: 22.20.1
+        version: 22.20.1
+      '@types/react':
+        specifier: 19.0.14
+        version: 19.0.14
+      typescript:
+        specifier: 5.9.3
+        version: 5.9.3
+
+  packages/agents/accounting-filing-readiness:
+    dependencies:
+      '@automutiny/agent-runtime':
+        specifier: workspace:*
+        version: link:../shared-runtime
+      '@automutiny/agent-ui':
+        specifier: workspace:*
+        version: link:../shared-ui
+      '@automutiny/db':
+        specifier: workspace:*
+        version: link:../../db
+      react:
+        specifier: 19.0.8
+        version: 19.0.8
+    devDependencies:
+      '@types/node':
+        specifier: 22.20.1
+        version: 22.20.1
+      '@types/react':
+        specifier: 19.0.14
+        version: 19.0.14
+      typescript:
+        specifier: 5.9.3
+        version: 5.9.3
+
+  packages/agents/accounting-transaction-review:
+    dependencies:
+      '@automutiny/agent-runtime':
+        specifier: workspace:*
+        version: link:../shared-runtime
+      '@automutiny/agent-ui':
+        specifier: workspace:*
+        version: link:../shared-ui
+      '@automutiny/db':
+        specifier: workspace:*
+        version: link:../../db
+      react:
+        specifier: 19.0.8
+        version: 19.0.8
+    devDependencies:
+      '@types/node':
+        specifier: 22.20.1
+        version: 22.20.1
+      '@types/react':
+        specifier: 19.0.14
+        version: 19.0.14
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -138,6 +237,81 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
 
+  packages/agents/logistics-invoice-reconciliation:
+    dependencies:
+      '@automutiny/agent-runtime':
+        specifier: workspace:*
+        version: link:../shared-runtime
+      '@automutiny/agent-ui':
+        specifier: workspace:*
+        version: link:../shared-ui
+      '@automutiny/db':
+        specifier: workspace:*
+        version: link:../../db
+      react:
+        specifier: 19.0.8
+        version: 19.0.8
+    devDependencies:
+      '@types/node':
+        specifier: 22.20.1
+        version: 22.20.1
+      '@types/react':
+        specifier: 19.0.14
+        version: 19.0.14
+      typescript:
+        specifier: 5.9.3
+        version: 5.9.3
+
+  packages/agents/logistics-load-exception:
+    dependencies:
+      '@automutiny/agent-runtime':
+        specifier: workspace:*
+        version: link:../shared-runtime
+      '@automutiny/agent-ui':
+        specifier: workspace:*
+        version: link:../shared-ui
+      '@automutiny/db':
+        specifier: workspace:*
+        version: link:../../db
+      react:
+        specifier: 19.0.8
+        version: 19.0.8
+    devDependencies:
+      '@types/node':
+        specifier: 22.20.1
+        version: 22.20.1
+      '@types/react':
+        specifier: 19.0.14
+        version: 19.0.14
+      typescript:
+        specifier: 5.9.3
+        version: 5.9.3
+
+  packages/agents/logistics-pod-verification:
+    dependencies:
+      '@automutiny/agent-runtime':
+        specifier: workspace:*
+        version: link:../shared-runtime
+      '@automutiny/agent-ui':
+        specifier: workspace:*
+        version: link:../shared-ui
+      '@automutiny/db':
+        specifier: workspace:*
+        version: link:../../db
+      react:
+        specifier: 19.0.8
+        version: 19.0.8
+    devDependencies:
+      '@types/node':
+        specifier: 22.20.1
+        version: 22.20.1
+      '@types/react':
+        specifier: 19.0.14
+        version: 19.0.14
+      typescript:
+        specifier: 5.9.3
+        version: 5.9.3
+
   packages/agents/shared-runtime:
     dependencies:
       '@ai-sdk/groq':
@@ -159,6 +333,25 @@ importers:
       '@types/node':
         specifier: 22.20.1
         version: 22.20.1
+      typescript:
+        specifier: 5.9.3
+        version: 5.9.3
+
+  packages/agents/shared-ui:
+    dependencies:
+      '@automutiny/db':
+        specifier: workspace:*
+        version: link:../../db
+      react:
+        specifier: 19.0.8
+        version: 19.0.8
+    devDependencies:
+      '@types/node':
+        specifier: 22.20.1
+        version: 22.20.1
+      '@types/react':
+        specifier: 19.0.14
+        version: 19.0.14
       typescript:
         specifier: 5.9.3
         version: 5.9.3

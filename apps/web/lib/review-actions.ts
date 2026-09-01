@@ -1,4 +1,5 @@
 import { randomUUID } from "node:crypto";
+import type { OperationalReviewInput } from "@automutiny/agent-runtime";
 import type { SupabaseClient } from "@automutiny/db";
 import type { DocumentReviewInput } from "@automutiny/document-routing-agent";
 import { assertSafeIntakeReply, type IntakeReviewInput } from "@automutiny/intake-brief-agent";
@@ -359,4 +360,56 @@ export async function markStalledReportReviewed(
     .eq("id", report.data.run_id);
   if (runUpdate.error) throw new Error(`Could not finish report run: ${runUpdate.error.message}`);
   return { status: "reviewed" };
+}
+
+export async function reviewOperationalCase(
+  client: SupabaseClient,
+  caseId: string,
+  input: OperationalReviewInput,
+  visitorSessionId: string,
+) {
+  const target = await client
+    .from("operational_cases")
+    .select("id, run_id, output_json, status, visitor_session_id")
+    .eq("id", caseId)
+    .maybeSingle();
+  if (target.error)
+    throw new Error(`Could not load operational review target: ${target.error.message}`);
+  if (!target.data) throw new Error("The operational case was not found.");
+  requireReviewOwnership(
+    target.data.visitor_session_id,
+    visitorSessionId,
+    "Reference records are read-only. Run a new scenario to use these controls.",
+  );
+  if (target.data.status !== "review") throw new Error("This case already has a decision.");
+
+  const output = { ...(target.data.output_json as JsonRecord) };
+  if (input.decision === "edit") output.draft_message = input.edited_message;
+  const status =
+    input.decision === "approve" ? "approved" : input.decision === "edit" ? "edited" : "rejected";
+  const review = await client.from("reviews").insert({
+    id: randomUUID(),
+    subject_type: "operational_case",
+    subject_id: caseId,
+    run_id: target.data.run_id,
+    decision: input.decision,
+    edited_payload_json:
+      input.decision === "edit"
+        ? { draft_message: input.edited_message }
+        : input.decision === "reject"
+          ? { reason: input.reason }
+          : null,
+    reviewer: "visitor",
+    visitor_session_id: visitorSessionId,
+  });
+  if (review.error) throw new Error(`Could not save operational review: ${review.error.message}`);
+
+  const [caseUpdate, runUpdate] = await Promise.all([
+    client.from("operational_cases").update({ status, output_json: output }).eq("id", caseId),
+    client.from("agent_runs").update({ status: "finished" }).eq("id", target.data.run_id),
+  ]);
+  const updateError = caseUpdate.error ?? runUpdate.error;
+  if (updateError) throw new Error(`Could not finish operational review: ${updateError.message}`);
+
+  return { caseId, decision: input.decision, status, externalActionTaken: false };
 }

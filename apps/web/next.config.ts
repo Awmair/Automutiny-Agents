@@ -9,9 +9,16 @@ const nextConfig: NextConfig = {
   transpilePackages: [
     "@automutiny/db",
     "@automutiny/agent-runtime",
+    "@automutiny/agent-ui",
     "@automutiny/intake-brief-agent",
     "@automutiny/document-routing-agent",
     "@automutiny/stalled-work-agent",
+    "@automutiny/accounting-document-chase-agent",
+    "@automutiny/accounting-transaction-review-agent",
+    "@automutiny/accounting-filing-readiness-agent",
+    "@automutiny/logistics-load-exception-agent",
+    "@automutiny/logistics-pod-verification-agent",
+    "@automutiny/logistics-invoice-reconciliation-agent",
   ],
 };
 

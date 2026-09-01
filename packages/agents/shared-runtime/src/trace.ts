@@ -1,5 +1,6 @@
 import { randomUUID } from "node:crypto";
 import type { SupabaseClient } from "@supabase/supabase-js";
+import type { AgentId } from "./definition";
 import { activeFault } from "./fault";
 import { redactForDisplay } from "./redact";
 
@@ -11,7 +12,7 @@ export type TraceContext = {
 
 type StartRunInput = {
   client: SupabaseClient;
-  agent: "intake-brief" | "document-routing" | "stalled-work";
+  agent: AgentId;
   subjectType: string;
   subjectId: string;
   model: string;

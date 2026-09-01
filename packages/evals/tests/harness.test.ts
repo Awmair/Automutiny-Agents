@@ -8,6 +8,7 @@ describe("release harness", () => {
       encoding: "utf8",
     });
     expect(output).toContain("PASS Intake Brief: 60 cases");
+    expect(output).toContain("PASS Accounting and Logistics: 18 cases");
     expect(output).toContain("PASS Red-team suite: 40 cases");
   });
 });

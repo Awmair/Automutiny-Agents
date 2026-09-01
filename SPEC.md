@@ -2,11 +2,11 @@
 
 ## 1. Purpose
 
-Automutiny Agents is a human-reviewed AI agent system for professional-services work. The current legal-services vertical contains three agents:
+Automutiny Agents is a human-reviewed AI agent system for professional-services and operations work. It contains nine agents across three verticals:
 
-1. Intake Brief
-2. Document Intake and Routing
-3. Stalled Work and Monday Brief
+1. Accounting: Client Document Chase, Transaction Review, and Filing Readiness
+2. Legal: Intake Brief, Document Intake and Routing, and Stalled Work and Monday Brief
+3. Logistics: Load Exception, POD Verification, and Invoice Reconciliation
 
 These agents have been deployed in real business workflows. Public records and screenshots are anonymized to protect client privacy.
 
@@ -125,6 +125,38 @@ Pipeline:
 
 The first issue is open by default. Tags and decision controls stay visible while supporting detail is placed inside accordions. Calls, escalation, deadline strategy, reassignment, and closure remain human decisions.
 
+### 5.4 Accounting agents
+
+Folders:
+
+- `packages/agents/accounting-document-chase`
+- `packages/agents/accounting-transaction-review`
+- `packages/agents/accounting-filing-readiness`
+
+Jobs:
+
+1. Compare requested client records with the received checklist and prepare one deadline-aware follow-up.
+2. Find duplicate, uncategorized, high-value, and unknown-vendor transaction exceptions before ledger posting.
+3. Check preparation, professional review, authorization, payment, and deadline gates before filing.
+
+Client requests, accounting treatment, ledger posting, professional approval, payment, and filing remain human decisions.
+
+### 5.5 Logistics agents
+
+Folders:
+
+- `packages/agents/logistics-load-exception`
+- `packages/agents/logistics-pod-verification`
+- `packages/agents/logistics-invoice-reconciliation`
+
+Jobs:
+
+1. Compare shipment events with service thresholds and prepare a dispatch escalation.
+2. Match proof-of-delivery fields with shipment records and flag billing-critical exceptions.
+3. Match carrier invoices with rate confirmations, approved accessorials, and accepted PODs.
+
+Dispatch changes, customer communication, document acceptance, claims handling, disputes, deductions, billing release, and payment remain human decisions.
+
 ## 6. Human review boundary
 
 Agent packages cannot write to the outbox or set a final workflow state. Review handlers in `apps/web` own those writes.
@@ -135,6 +167,7 @@ Current review actions:
 - Document routing: approve, edit, or reject.
 - Stalled item: approve, snooze, or dismiss.
 - Stalled report: mark reviewed.
+- Accounting and logistics case: approve, edit, or reject.
 
 The public repository uses a simulated outbox. Adding email, CRM, case-management, or document-system delivery changes the security boundary and requires a separate implementation and review.
 
@@ -142,7 +175,7 @@ The public repository uses a simulated outbox. Adding email, CRM, case-managemen
 
 Supabase migrations are the only source of truth for the database schema. Dashboard-only schema changes are not allowed.
 
-Core records include firms, staff, contacts, interactions, leads, matters, tasks, deadlines, documents, document requests, agent runs, trace steps, agent results, reviews, the simulated outbox, and visitor sessions.
+Core records include firms, staff, contacts, interactions, leads, matters, tasks, deadlines, documents, document requests, operational cases, agent runs, trace steps, agent results, reviews, the simulated outbox, and visitor sessions.
 
 Security rules:
 
@@ -180,9 +213,10 @@ The committed release gate covers:
 | Intake contracts | 60 |
 | Document contracts | 60 |
 | Stalled-work snapshots | 6 |
+| Accounting and logistics contracts | 18 |
 | Pressure cases | 45 |
 | Red-team cases | 40 |
-| Total | 211 |
+| Total | 229 |
 
 Contract checks prove deterministic expectations and safe failure behavior. They do not prove universal model accuracy. A separate live check verifies that the configured Groq model can return the required structured schemas.
 
@@ -203,7 +237,10 @@ apps/web                         Next.js dashboard and server routes
 packages/agents/intake-brief     Intake agent, UI, tests, and evals
 packages/agents/document-routing Document agent, fixtures, UI, tests, and evals
 packages/agents/stalled-work     Stalled-work agent, UI, tests, and evals
+packages/agents/accounting-*     Three accounting agents, each with UI, rules, tests, and evals
+packages/agents/logistics-*      Three logistics agents, each with UI, rules, tests, and evals
 packages/agents/shared-runtime   Shared model, guard, limit, and trace code
+packages/agents/shared-ui        Shared compact scenario and review components
 packages/db                      Supabase client and typed queries
 packages/seed                    Fixed anonymized reference records
 packages/evals                   Shared evaluation harness

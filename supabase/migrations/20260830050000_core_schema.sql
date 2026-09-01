@@ -142,7 +142,17 @@ create table public.document_requests (
 
 create table public.agent_runs (
   id uuid primary key default gen_random_uuid(),
-  agent text not null check (agent in ('intake-brief', 'document-routing', 'stalled-work')),
+  agent text not null check (agent in (
+    'intake-brief',
+    'document-routing',
+    'stalled-work',
+    'accounting-document-chase',
+    'accounting-transaction-review',
+    'accounting-filing-readiness',
+    'logistics-load-exception',
+    'logistics-pod-verification',
+    'logistics-invoice-reconciliation'
+  )),
   subject_type text not null,
   subject_id uuid not null,
   model text not null,
@@ -177,6 +187,31 @@ create table public.agent_steps (
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
   unique (run_id, seq)
+);
+
+create table public.operational_cases (
+  id uuid primary key default gen_random_uuid(),
+  agent text not null check (agent in (
+    'accounting-document-chase',
+    'accounting-transaction-review',
+    'accounting-filing-readiness',
+    'logistics-load-exception',
+    'logistics-pod-verification',
+    'logistics-invoice-reconciliation'
+  )),
+  scenario_id text not null check (length(btrim(scenario_id)) > 0),
+  subject text not null check (length(btrim(subject)) > 0),
+  input_json jsonb not null,
+  output_json jsonb not null,
+  confidence numeric(4, 3) not null check (confidence >= 0 and confidence <= 1),
+  priority text not null check (priority in ('low', 'medium', 'high')),
+  run_id uuid not null references public.agent_runs(id) on delete cascade,
+  status text not null default 'review' check (
+    status in ('review', 'approved', 'edited', 'rejected')
+  ),
+  visitor_session_id uuid references public.visitor_sessions(id) on delete cascade,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
 );
 
 create table public.briefs (
@@ -311,6 +346,7 @@ create index documents_queue_idx on public.documents (status, uploaded_at desc);
 create index document_requests_open_idx on public.document_requests (matter_id, requested_at) where received_at is null;
 create index agent_runs_queue_idx on public.agent_runs (agent, status, started_at desc);
 create index agent_steps_run_idx on public.agent_steps (run_id, seq);
+create index operational_cases_queue_idx on public.operational_cases (agent, status, created_at desc);
 create index reviews_subject_idx on public.reviews (subject_type, subject_id, decided_at desc);
 
 create or replace function public.set_updated_at()
@@ -342,6 +378,7 @@ begin
     'document_requests',
     'agent_runs',
     'agent_steps',
+    'operational_cases',
     'briefs',
     'document_results',
     'stalled_reports',
@@ -391,6 +428,7 @@ alter table public.documents enable row level security;
 alter table public.document_requests enable row level security;
 alter table public.agent_runs enable row level security;
 alter table public.agent_steps enable row level security;
+alter table public.operational_cases enable row level security;
 alter table public.briefs enable row level security;
 alter table public.document_results enable row level security;
 alter table public.stalled_reports enable row level security;

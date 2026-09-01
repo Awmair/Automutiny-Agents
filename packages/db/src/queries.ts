@@ -1,7 +1,15 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 
 import { createServerDatabaseClient } from "./client";
-import type { AgentQueue, AgentQueueId, AgentQueueSummary } from "./types";
+import {
+  type AgentQueue,
+  type AgentQueueId,
+  type AgentQueueSummary,
+  type OperationalAgentId,
+  type OperationalCaseDetail,
+  type OperationalOutput,
+  operationalAgentIds,
+} from "./types";
 
 type JsonRecord = Record<string, unknown>;
 
@@ -54,6 +62,21 @@ type MatterRow = {
   id: string;
   matter_type: string;
   stage: string;
+};
+
+type OperationalCaseRow = {
+  id: string;
+  agent: OperationalAgentId;
+  scenario_id: string;
+  subject: string;
+  input_json: JsonRecord;
+  output_json: JsonRecord;
+  confidence: number;
+  priority: string;
+  status: string;
+  run_id: string;
+  visitor_session_id: string | null;
+  created_at: string;
 };
 
 function assertQuery<T>(data: T | null, error: { message: string } | null, context: string): T {
@@ -234,19 +257,122 @@ async function getStalledQueue(client: SupabaseClient): Promise<AgentQueue> {
   };
 }
 
+async function getOperationalQueue(
+  client: SupabaseClient,
+  agentId: OperationalAgentId,
+): Promise<AgentQueue> {
+  const result = await client
+    .from("operational_cases")
+    .select(
+      "id, agent, scenario_id, subject, input_json, output_json, confidence, priority, status, run_id, visitor_session_id, created_at",
+    )
+    .eq("agent", agentId)
+    .is("visitor_session_id", null)
+    .order("created_at", { ascending: false });
+  const rows = assertQuery(
+    result.data as OperationalCaseRow[] | null,
+    result.error,
+    `Could not load ${agentId} queue`,
+  );
+
+  return {
+    agentId,
+    items: rows.map((row) => ({
+      id: row.id,
+      subject: row.subject,
+      summary: text(row.output_json.headline, "Prepared operational review"),
+      confidence: Number(row.confidence),
+      createdAt: row.created_at,
+      status: row.status === "review" ? `${readable(row.priority)} priority` : readable(row.status),
+      href: `/operations/${row.id}`,
+    })),
+    awaitingReview: rows.filter((row) => row.status === "review").length,
+  };
+}
+
 export async function getAgentQueue(
   agentId: AgentQueueId,
   client: SupabaseClient = createServerDatabaseClient(),
 ): Promise<AgentQueue> {
   if (agentId === "intake-brief") return getIntakeQueue(client);
   if (agentId === "document-routing") return getDocumentQueue(client);
-  return getStalledQueue(client);
+  if (agentId === "stalled-work") return getStalledQueue(client);
+  return getOperationalQueue(client, agentId);
 }
 
 export async function getAgentQueues(
   client: SupabaseClient = createServerDatabaseClient(),
 ): Promise<AgentQueue[]> {
-  return Promise.all([getIntakeQueue(client), getDocumentQueue(client), getStalledQueue(client)]);
+  return Promise.all([
+    getIntakeQueue(client),
+    getDocumentQueue(client),
+    getStalledQueue(client),
+    ...operationalAgentIds.map((agentId) => getOperationalQueue(client, agentId)),
+  ]);
+}
+
+export async function getOperationalCaseDetail(
+  caseId: string,
+  client: SupabaseClient = createServerDatabaseClient(),
+): Promise<OperationalCaseDetail | null> {
+  const caseResult = await client
+    .from("operational_cases")
+    .select(
+      "id, agent, scenario_id, subject, input_json, output_json, confidence, priority, status, run_id, visitor_session_id, created_at",
+    )
+    .eq("id", caseId)
+    .maybeSingle();
+  if (caseResult.error)
+    throw new Error(`Could not load operational case: ${caseResult.error.message}`);
+  if (!caseResult.data) return null;
+  const row = caseResult.data as OperationalCaseRow;
+  const [runResult, stepsResult] = await Promise.all([
+    client
+      .from("agent_runs")
+      .select("id, model, status, input_tokens, output_tokens, cost_usd, started_at, finished_at")
+      .eq("id", row.run_id)
+      .single(),
+    client
+      .from("agent_steps")
+      .select("seq, name, display_input_json, display_output_json, tokens, note")
+      .eq("run_id", row.run_id)
+      .order("seq", { ascending: true }),
+  ]);
+  if (runResult.error)
+    throw new Error(`Could not load operational run: ${runResult.error.message}`);
+  if (stepsResult.error)
+    throw new Error(`Could not load operational trace: ${stepsResult.error.message}`);
+  const run = runResult.data;
+
+  return {
+    id: row.id,
+    agentId: row.agent,
+    scenarioId: row.scenario_id,
+    subject: row.subject,
+    input: row.input_json,
+    output: row.output_json as OperationalOutput,
+    status: row.status,
+    visitorSessionId: row.visitor_session_id,
+    createdAt: row.created_at,
+    run: {
+      id: run.id,
+      model: run.model,
+      status: run.status,
+      inputTokens: run.input_tokens,
+      outputTokens: run.output_tokens,
+      costUsd: Number(run.cost_usd),
+      startedAt: run.started_at,
+      finishedAt: run.finished_at,
+    },
+    steps: (stepsResult.data ?? []).map((step) => ({
+      sequence: step.seq,
+      name: step.name,
+      input: step.display_input_json,
+      output: step.display_output_json,
+      tokens: step.tokens,
+      note: step.note,
+    })),
+  };
 }
 
 export async function getAgentQueueSummaries(

@@ -1,0 +1,3 @@
+{"agent":"logistics-pod-verification","scenario":"pod-4821-damage","expected":{"status":"blocked","priority":"high"},"actual":{"status":"blocked","priority":"high"},"human_boundary":true}
+{"agent":"logistics-pod-verification","scenario":"pod-5174-blurred","expected":{"status":"blocked","priority":"high"},"actual":{"status":"blocked","priority":"high"},"human_boundary":true}
+{"agent":"logistics-pod-verification","scenario":"pod-5290-clean","expected":{"status":"ready","priority":"low"},"actual":{"status":"ready","priority":"low"},"human_boundary":true}

@@ -15,6 +15,12 @@ Each agent owns one operational job. It applies written business rules, calls a 
 | Legal services | Intake Brief | Qualification score, missing facts, risk flags, and reply draft | Conflict checks, legal assessment, client communication, and accepting work |
 | Legal services | Document Intake and Routing | Document classification, completeness check, and routing proposal | Authenticity, sufficiency, final routing, and client requests |
 | Legal services | Stalled Work and Monday Brief | Ranked stalled matters, owner notes, and next-step suggestions | Calls, escalation, deadline strategy, reassignment, and closure |
+| Accounting | Client Document Chase | Missing-record scan and deadline-aware follow-up | Client communication and filing decisions |
+| Accounting | Transaction Review | Duplicate, category, vendor, and high-value exceptions | Accounting treatment and ledger posting |
+| Accounting | Filing Readiness | Preparation, review, authorization, payment, and deadline gates | Professional approval and filing |
+| Logistics | Load Exception | Shipment exception ranking and customer-update draft | Dispatch, recovery plan, and customer communication |
+| Logistics | POD Verification | Shipment match and delivery-evidence checks | Authenticity, damage review, acceptance, and billing release |
+| Logistics | Invoice Reconciliation | Rate, accessorial, POD, and invoice variance review | Disputes, deductions, and payment approval |
 
 ## How it works
 
@@ -94,7 +100,10 @@ The galleries are collapsed so the README stays compact while the full workflow 
 | `packages/agents/intake-brief` | Intake rules, prompts, schemas, UI, tests, and eval cases |
 | `packages/agents/document-routing` | Document rules, fixtures, schemas, UI, tests, and eval cases |
 | `packages/agents/stalled-work` | Stalled-work rules, schemas, UI, tests, and eval cases |
+| `packages/agents/accounting-*` | Three isolated accounting agent workflows |
+| `packages/agents/logistics-*` | Three isolated logistics agent workflows |
 | `packages/agents/shared-runtime` | Model calls, limits, guards, retries, and tracing |
+| `packages/agents/shared-ui` | Shared compact scenario and review components |
 | `apps/web` | Next.js routes and dashboard |
 | `supabase/migrations` | Versioned database schema and security policies |
 | `deployment/client` | Self-hosting setup and verification |
@@ -130,7 +139,7 @@ No credential belongs in source control. Keep `apps/web/.env.local` private and 
 
 ## Verification evidence
 
-The committed release gate covers 60 intake cases, 60 document cases, 6 stalled-work snapshots, 45 pressure cases, and 40 red-team cases. [`docs/evals/live-model.md`](./docs/evals/live-model.md) records the separate Groq connectivity and schema check.
+The committed release gate covers 60 intake cases, 60 document cases, 6 stalled-work snapshots, 18 accounting and logistics contracts, 45 pressure cases, and 40 red-team cases. [`docs/evals/live-model.md`](./docs/evals/live-model.md) records the separate Groq connectivity and schema check.
 
 These checks verify deterministic contracts and safe failure behavior. They do not claim universal model accuracy.
 

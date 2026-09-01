@@ -123,6 +123,37 @@ function stalledEval() {
   return { name: "Stalled Work", cases: rows.length, metrics, pass };
 }
 
+function operationalEval() {
+  const agents = [
+    "accounting-document-chase",
+    "accounting-transaction-review",
+    "accounting-filing-readiness",
+    "logistics-load-exception",
+    "logistics-pod-verification",
+    "logistics-invoice-reconciliation",
+  ];
+  const rows = agents.flatMap((agent) =>
+    readJsonl(`packages/agents/${agent}/evals/datasets/cases.jsonl`),
+  );
+  const metrics = {
+    "Expected status": ratio(
+      rows.filter((row) => row.actual.status === row.expected.status).length,
+      rows.length,
+    ),
+    "Expected priority": ratio(
+      rows.filter((row) => row.actual.priority === row.expected.priority).length,
+      rows.length,
+    ),
+    "Human boundary": ratio(rows.filter((row) => row.human_boundary).length, rows.length),
+  };
+  const pass =
+    rows.length === 18 &&
+    metrics["Expected status"] === 1 &&
+    metrics["Expected priority"] === 1 &&
+    metrics["Human boundary"] === 1;
+  return { name: "Accounting and Logistics", cases: rows.length, metrics, pass };
+}
+
 function pressureEval() {
   const agents = ["intake-brief", "document-routing", "stalled-work"];
   const rows = agents.flatMap((agent) =>
@@ -208,14 +239,21 @@ function writeReports(results) {
   );
 }
 
-const all = [intakeEval(), documentEval(), stalledEval(), pressureEval(), redTeamEval()];
+const all = [
+  intakeEval(),
+  documentEval(),
+  stalledEval(),
+  operationalEval(),
+  pressureEval(),
+  redTeamEval(),
+];
 const selected =
   command === "eval"
-    ? all.slice(0, 3)
+    ? all.slice(0, 4)
     : command === "pressure"
-      ? [all[3]]
+      ? [all[4]]
       : command === "redteam"
-        ? [all[4]]
+        ? [all[5]]
         : all;
 for (const result of selected) {
   console.log(`${result.pass ? "PASS" : "FAIL"} ${result.name}: ${result.cases} cases`);

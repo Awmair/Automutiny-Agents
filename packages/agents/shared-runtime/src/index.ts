@@ -11,6 +11,12 @@ export {
   maxModelInputCharacters,
 } from "./limits";
 export { callStructured, defaultGroqModel } from "./llm";
+export type { OperationalReviewInput, OperationalScenario } from "./operational";
+export {
+  OperationalOutputSchema,
+  OperationalReviewInputSchema,
+  runOperationalCase,
+} from "./operational";
 export { redactForDisplay } from "./redact";
 export type { TraceContext } from "./trace";
 export { failRun, finishRun, recordStep, startRun } from "./trace";

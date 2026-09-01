@@ -1,40 +1,43 @@
+import type { AgentQueueId, AgentQueueSummary } from "@automutiny/db";
 import Link from "next/link";
+
+type AgentDetails = {
+  id: AgentQueueId;
+  label: string;
+  name: string;
+  purpose: string;
+  humanBoundary: string;
+  route: `/${string}`;
+};
 
 type VerticalOverviewPageProps = {
   name: "Accounting" | "Logistics";
   audience: string;
   businessProblem: string;
+  agents: readonly AgentDetails[];
+  queueSummaries: AgentQueueSummary[];
 };
 
-const standards = [
-  {
-    number: "01",
-    title: "One valuable job",
-    description:
-      "Each agent owns a narrow workflow with a clear input, output and business result.",
-  },
-  {
-    number: "02",
-    title: "Inspectable work",
-    description:
-      "Every demo shows the records, rules, checks and evidence behind the prepared work.",
-  },
-  {
-    number: "03",
-    title: "Human authority",
-    description: "A person reviews the result and keeps control over every consequential action.",
-  },
+const operatingSteps = [
+  ["Read", "Load one bounded set of business records."],
+  ["Check", "Apply written operating rules to the records."],
+  ["Prepare", "Build a compact result and suggested next step."],
+  ["Explain", "Save the evidence and the full run trace."],
+  ["Decide", "Stop for a human approval, edit or rejection."],
 ] as const;
 
 export function VerticalOverviewPage({
   name,
   audience,
   businessProblem,
+  agents,
+  queueSummaries,
 }: VerticalOverviewPageProps) {
   const slug = name.toLowerCase();
+  const summaryByAgent = new Map(queueSummaries.map((summary) => [summary.agentId, summary]));
 
   return (
-    <div className="site-shell overview-shell">
+    <div className="site-shell">
       <header className="site-header">
         <div className="header-inner">
           <Link className="brand" href="/" aria-label="Automutiny agents home">
@@ -56,111 +59,179 @@ export function VerticalOverviewPage({
               Logistics
             </Link>
           </nav>
-          <Link className="button button-small header-cta" href="/">
-            All verticals
-          </Link>
+          <a className="button button-small header-cta" href="#agents">
+            View agents
+          </a>
           <details className="mobile-menu">
             <summary aria-label="Open navigation">
               <i />
               <i />
             </summary>
             <nav aria-label="Mobile navigation">
-              <Link aria-current={name === "Accounting" ? "page" : undefined} href="/accounting">
-                Accounting
-              </Link>
+              <Link href="/accounting">Accounting</Link>
               <Link href="/legal">Legal</Link>
-              <Link aria-current={name === "Logistics" ? "page" : undefined} href="/logistics">
-                Logistics
-              </Link>
-              <Link className="button" href="/">
-                All verticals
-              </Link>
+              <Link href="/logistics">Logistics</Link>
+              <a className="button" href="#agents">
+                View agents
+              </a>
             </nav>
           </details>
         </div>
       </header>
 
       <main>
-        <section className="overview-hero" aria-labelledby={`${slug}-title`}>
-          <div className="container overview-hero-grid">
-            <div>
+        <section className="hero vertical-agent-hero" aria-labelledby={`${slug}-title`}>
+          <div className="hero-cloud" aria-hidden="true" />
+          <div className="container hero-grid">
+            <div className="hero-copy">
               <p className="kicker">Automutiny / {name}</p>
               <h1 id={`${slug}-title`}>
-                {name} agents for {audience}.
+                Three {name.toLowerCase()} agents. Real work. Human authority.
               </h1>
-              <p className="overview-lead">{businessProblem}</p>
+              <p className="hero-lead">{businessProblem}</p>
               <div className="hero-actions">
-                <a className="button" href="#agent-standard">
-                  See the agent standard
+                <a className="button" href="#agents">
+                  Explore the agents
                 </a>
-                <Link className="text-link" href="/legal">
-                  Explore the legal team <span aria-hidden="true">→</span>
-                </Link>
+                <a className="text-link" href="#process">
+                  See the complete workflow <span aria-hidden="true">→</span>
+                </a>
               </div>
+              <section className="hero-points" aria-label="System summary">
+                <div>
+                  <strong>3</strong>
+                  <span>specialist agents</span>
+                </div>
+                <div>
+                  <strong>1</strong>
+                  <span>shared control system</span>
+                </div>
+                <div>
+                  <strong>0</strong>
+                  <span>automatic final actions</span>
+                </div>
+              </section>
             </div>
 
-            <aside className="overview-brief" aria-label={`${name} agent standard`}>
-              <div className="overview-brief-head">
-                <span>{name} agent standard</span>
-                <strong>Human controlled</strong>
+            <section className="agent-console" aria-label={`${name} agent overview`}>
+              <div className="console-topline">
+                <span>{name} agents / live view</span>
+                <span className="system-state">Human controlled</span>
               </div>
-              <dl>
-                <div>
-                  <dt>Scope</dt>
-                  <dd>Narrow business workflows</dd>
-                </div>
-                <div>
-                  <dt>Evidence</dt>
-                  <dd>Inputs, rules, checks and trace</dd>
-                </div>
-                <div>
-                  <dt>Control</dt>
-                  <dd>Human review before action</dd>
-                </div>
-              </dl>
-              <p>Agents prepare the work. People retain the authority.</p>
-            </aside>
+              <div className="console-flow">
+                {agents.map((agent, index) => (
+                  <Link className="console-agent" href={agent.route} key={agent.id}>
+                    <div>
+                      <span className="console-number">0{index + 1}</span>
+                      <span className="console-status">Ready</span>
+                    </div>
+                    <h2>{agent.name}</h2>
+                    <p>{agent.purpose}</p>
+                    <small>
+                      {summaryByAgent.get(agent.id)?.awaitingReview ?? 0} for review · complete
+                      workflow
+                    </small>
+                  </Link>
+                ))}
+              </div>
+              <div className="console-footer">
+                <span>Rules loaded</span>
+                <span>Trace recording on</span>
+                <span>Actions locked</span>
+              </div>
+            </section>
           </div>
         </section>
 
+        <aside className="fit-strip">
+          <div className="container">
+            <p>
+              Built for {audience}. Each agent handles one expensive operational bottleneck and
+              shows its work.
+            </p>
+          </div>
+        </aside>
+
         <section
-          className="section overview-standard"
-          id="agent-standard"
-          aria-labelledby="standard-title"
+          className="section agents-section"
+          id="agents"
+          aria-labelledby={`${slug}-agents-title`}
         >
           <div className="container">
             <div className="split-head">
               <div>
-                <p className="kicker">Inside every demo</p>
-                <h2 id="standard-title">The same standard across every agent.</h2>
+                <p className="kicker">The agent team</p>
+                <h2 id={`${slug}-agents-title`}>Three specialists. One standard of control.</h2>
               </div>
               <p>
-                The workflows change by industry. The rules, evidence trail and human boundary stay
-                consistent.
+                Run a scenario, inspect the result, open the trace and make the final decision
+                yourself.
               </p>
             </div>
-            <div className="overview-standard-grid">
-              {standards.map((standard) => (
-                <article key={standard.title}>
-                  <span>{standard.number}</span>
-                  <h3>{standard.title}</h3>
-                  <p>{standard.description}</p>
-                </article>
-              ))}
+            <div className="agent-grid">
+              {agents.map((agent, index) => {
+                const summary = summaryByAgent.get(agent.id);
+                return (
+                  <Link className="agent-card compact-agent-card" href={agent.route} key={agent.id}>
+                    <div className="agent-card-head">
+                      <span>0{index + 1}</span>
+                      <span>{agent.label}</span>
+                    </div>
+                    <h3>{agent.name}</h3>
+                    <p className="agent-purpose">{agent.purpose}</p>
+                    <div className="agent-record">
+                      <div>
+                        <span>Runs</span>
+                        <p>Bounded operational records</p>
+                      </div>
+                      <div>
+                        <span>Produces</span>
+                        <p>Review-ready action</p>
+                      </div>
+                    </div>
+                    <div className="agent-queue-count">
+                      <strong>{summary?.total ?? 0}</strong>
+                      <span>reference items · {summary?.awaitingReview ?? 0} for review</span>
+                    </div>
+                    <div className="human-boundary">
+                      <span>What stays human</span>
+                      <p>{agent.humanBoundary}</p>
+                    </div>
+                    <span className="agent-card-open">Run full workflow →</span>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </section>
 
-        <section className="overview-portfolio-strip">
+        <section
+          className="section dark process-section"
+          id="process"
+          aria-labelledby={`${slug}-process-title`}
+        >
           <div className="container">
-            <div>
-              <span>Agent portfolio</span>
-              <strong>Accounting, Legal and Logistics</strong>
+            <div className="split-head">
+              <div>
+                <p className="kicker">Complete workflow</p>
+                <h2 id={`${slug}-process-title`}>
+                  Every demo runs from records to a saved human decision.
+                </h2>
+              </div>
+              <p>
+                ELI5: records go in, rules find the issue, the agent prepares the work, and a person
+                decides what happens.
+              </p>
             </div>
-            <p>Focused agents, visible evidence and human control across every vertical.</p>
-            <Link className="button button-small" href="/">
-              View all verticals
-            </Link>
+            <ol className="step-grid">
+              {operatingSteps.map(([title, description], index) => (
+                <li key={title}>
+                  <span>0{index + 1}</span>
+                  <h3>{title}</h3>
+                  <p>{description}</p>
+                </li>
+              ))}
+            </ol>
           </div>
         </section>
       </main>

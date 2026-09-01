@@ -20,7 +20,8 @@
     "release:check": "node packages/evals/src/run.mjs release --write",
     "seed": "pnpm --filter @automutiny/seed seed",
     "test": "vitest run",
-    "typecheck": "pnpm -r --if-present typecheck"
+    "typecheck": "pnpm -r --if-present typecheck",
+    "verify:live": "node scripts/verify-live-demos.mjs"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.11",

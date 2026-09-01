@@ -1,0 +1,3 @@
+{"agent":"logistics-invoice-reconciliation","scenario":"invoice-8821-variance","expected":{"status":"blocked","priority":"high"},"actual":{"status":"blocked","priority":"high"},"human_boundary":true}
+{"agent":"logistics-invoice-reconciliation","scenario":"invoice-9104-rate-mismatch","expected":{"status":"blocked","priority":"high"},"actual":{"status":"blocked","priority":"high"},"human_boundary":true}
+{"agent":"logistics-invoice-reconciliation","scenario":"invoice-9260-clean","expected":{"status":"ready","priority":"low"},"actual":{"status":"ready","priority":"low"},"human_boundary":true}

@@ -9,9 +9,17 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@automutiny/accounting-document-chase-agent": "workspace:*",
+    "@automutiny/accounting-filing-readiness-agent": "workspace:*",
+    "@automutiny/accounting-transaction-review-agent": "workspace:*",
+    "@automutiny/agent-runtime": "workspace:*",
+    "@automutiny/agent-ui": "workspace:*",
     "@automutiny/db": "workspace:*",
     "@automutiny/document-routing-agent": "workspace:*",
     "@automutiny/intake-brief-agent": "workspace:*",
+    "@automutiny/logistics-invoice-reconciliation-agent": "workspace:*",
+    "@automutiny/logistics-load-exception-agent": "workspace:*",
+    "@automutiny/logistics-pod-verification-agent": "workspace:*",
     "@automutiny/stalled-work-agent": "workspace:*",
     "@fontsource/geist": "5.3.0",
     "@fontsource/ibm-plex-mono": "5.2.5",

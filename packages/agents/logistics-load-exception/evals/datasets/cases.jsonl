@@ -1,0 +1,3 @@
+{"agent":"logistics-load-exception","scenario":"load-4821-critical","expected":{"status":"blocked","priority":"high"},"actual":{"status":"blocked","priority":"high"},"human_boundary":true}
+{"agent":"logistics-load-exception","scenario":"load-5174-watch","expected":{"status":"needs_review","priority":"medium"},"actual":{"status":"needs_review","priority":"medium"},"human_boundary":true}
+{"agent":"logistics-load-exception","scenario":"load-5290-on-track","expected":{"status":"ready","priority":"low"},"actual":{"status":"ready","priority":"low"},"human_boundary":true}

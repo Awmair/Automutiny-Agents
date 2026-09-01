@@ -35,3 +35,13 @@ Cases: 6 · Result: PASS
 | False-positive rate | 0.0% |
 | Brief numeric consistency | 100.0% |
 
+## Accounting and Logistics
+
+Cases: 18 · Result: PASS
+
+| Metric | Result |
+|---|---:|
+| Expected status | 100.0% |
+| Expected priority | 100.0% |
+| Human boundary | 100.0% |
+

@@ -26,10 +26,16 @@ export function AgentQueuePage({
   agent,
   queue,
   children,
+  organizationLabel = "Briar & Calder LLP",
+  backHref = "/legal",
+  backLabel = "Legal agents",
 }: {
   agent: AgentDetails;
   queue: AgentQueue;
   children?: ReactNode;
+  organizationLabel?: string;
+  backHref?: string;
+  backLabel?: string;
 }) {
   return (
     <div className="site-shell queue-site-shell">
@@ -45,9 +51,9 @@ export function AgentQueuePage({
               <strong>mutiny</strong>
             </span>
           </Link>
-          <span className="queue-firm">Briar &amp; Calder LLP</span>
-          <Link className="button button-small" href="/legal">
-            Legal agents
+          <span className="queue-firm">{organizationLabel}</span>
+          <Link className="button button-small" href={backHref}>
+            {backLabel}
           </Link>
         </div>
       </header>
@@ -139,8 +145,8 @@ export function AgentQueuePage({
           <div className="container queue-connection-grid">
             <span>How it connects</span>
             <p>
-              Supabase stores the firm records. The server reads only this agent’s lane and turns it
-              into the queue above. Completed rows open this agent’s compact owner view and
+              Supabase stores the workflow records. The server reads only this agent’s lane and
+              turns it into the queue above. Completed rows open this agent’s compact owner view and
               inspectable run trace.
             </p>
           </div>

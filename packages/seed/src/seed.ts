@@ -36,6 +36,7 @@ export async function seedDatabase(client: SupabaseClient = createServerDatabase
     ["documents", seedData.documents],
     ["document_requests", seedData.document_requests],
     ["agent_runs", seedData.agent_runs],
+    ["operational_cases", seedData.operational_cases],
     ["briefs", seedData.briefs],
     ["document_results", seedData.document_results],
     ["stalled_reports", seedData.stalled_reports],

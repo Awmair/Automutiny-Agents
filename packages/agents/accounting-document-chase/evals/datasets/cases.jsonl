@@ -1,0 +1,3 @@
+{"agent":"accounting-document-chase","scenario":"mesa-dental-return","expected":{"status":"needs_review","priority":"high"},"actual":{"status":"needs_review","priority":"high"},"human_boundary":true}
+{"agent":"accounting-document-chase","scenario":"ardent-design-return","expected":{"status":"needs_review","priority":"medium"},"actual":{"status":"needs_review","priority":"medium"},"human_boundary":true}
+{"agent":"accounting-document-chase","scenario":"lumen-close-ready","expected":{"status":"ready","priority":"low"},"actual":{"status":"ready","priority":"low"},"human_boundary":true}
