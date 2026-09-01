@@ -17,6 +17,7 @@ describe("Invoice Reconciliation Agent", () => {
     const result = analyzeLogisticsInvoice(scenario.input);
     expect(result.status).toBe("blocked");
     expect(result.priority).toBe("high");
+    expect(result.headline).toBe("1 invoice exception needs AP review");
     expect(result.draft_message).toContain("No payment was approved");
   });
 

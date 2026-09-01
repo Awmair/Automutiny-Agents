@@ -149,7 +149,7 @@ export function analyzeLogisticsInvoice(input: InvoiceReconciliationInput): Oper
 
   return {
     headline: exceptions.length
-      ? `${exceptions.length} invoice exception${exceptions.length === 1 ? "" : "s"} need AP review`
+      ? `${exceptions.length} invoice exception${exceptions.length === 1 ? " needs" : "s need"} AP review`
       : "Carrier invoice matches the configured payment controls",
     summary: `${input.invoice_id} totals ${money(totalInvoiced)} against ${money(totalQuoted)} in confirmed charges, a ${money(totalVariance)} variance.`,
     status: exceptions.length ? "blocked" : "ready",

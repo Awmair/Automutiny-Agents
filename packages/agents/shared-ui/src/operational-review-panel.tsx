@@ -139,7 +139,7 @@ export function OperationalReviewPanel({
                     <p className="kicker">Exceptions</p>
                     <h2>
                       {detail.output.exceptions.length} item
-                      {detail.output.exceptions.length === 1 ? "" : "s"} need attention.
+                      {detail.output.exceptions.length === 1 ? " needs" : "s need"} attention.
                     </h2>
                   </div>
                 </div>
