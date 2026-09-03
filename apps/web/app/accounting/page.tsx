@@ -6,8 +6,10 @@ import { accountingAgents } from "../../lib/operational-agents";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Accounting Agents",
-  description: "Lean AI agents for accounting, CPA and tax firm workflows.",
+  title: "AI Automation Agents for Accounting Firms",
+  description:
+    "Test AI agents for client document collection, transaction review and filing readiness in accounting, CPA and tax firms.",
+  alternates: { canonical: "/accounting" },
 };
 
 export default async function AccountingPage() {

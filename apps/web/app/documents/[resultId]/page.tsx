@@ -1,11 +1,17 @@
 import { getDocumentReviewDetail } from "@automutiny/document-routing-agent";
 import { DocumentReviewPanel } from "@automutiny/document-routing-agent/ui";
+import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { visitorSessionCookieName } from "../../../lib/visitor-session";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: true },
+};
+
 export default async function DocumentReviewPage({
   params,
 }: {

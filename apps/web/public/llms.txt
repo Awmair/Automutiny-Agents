@@ -1,0 +1,39 @@
+# Automutiny Live Agents
+
+> Nine focused AI agents for accounting, legal and logistics workflows. Each agent prepares work, shows its evidence and stops for human review before a consequential decision.
+
+## Start here
+
+- [Live Agents home](https://agents.automutiny.com/): Choose an industry and test a complete workflow.
+- [Accounting agents](https://agents.automutiny.com/accounting): AI automation for accounting, CPA and tax firm workflows.
+- [Legal agents](https://agents.automutiny.com/legal): AI agents for legal intake, document routing and stalled matter review.
+- [Logistics agents](https://agents.automutiny.com/logistics): AI automation for freight, transportation and logistics operations.
+
+## Accounting agents
+
+- [Client Document Chase Agent](https://agents.automutiny.com/accounting/document-chase): Finds missing client records and prepares deadline-aware follow-up work.
+- [Transaction Review Agent](https://agents.automutiny.com/accounting/transaction-review): Surfaces ledger exceptions and prepares evidence-backed coding suggestions.
+- [Filing Readiness Agent](https://agents.automutiny.com/accounting/filing-readiness): Checks filing gates, ranks blockers and prepares the final review handoff.
+
+## Legal agents
+
+- [Intake Brief Agent](https://agents.automutiny.com/intake): Turns a new inquiry and firm context into a review-ready legal intake brief.
+- [Document Intake and Routing Agent](https://agents.automutiny.com/documents): Classifies incoming legal documents, checks completeness and proposes a route.
+- [Stalled Work and Monday Brief Agent](https://agents.automutiny.com/stalled): Finds quiet or at-risk matters and prepares an owner brief and follow-up work.
+
+## Logistics agents
+
+- [Load Exception Agent](https://agents.automutiny.com/logistics/load-exception): Finds shipment service exceptions and prepares a dispatcher-ready escalation.
+- [POD Verification Agent](https://agents.automutiny.com/logistics/pod-verification): Matches proof of delivery evidence to a load and checks billing-critical fields.
+- [Invoice Reconciliation Agent](https://agents.automutiny.com/logistics/invoice-reconciliation): Matches carrier charges to agreed rates and supporting approvals.
+
+## Operating standard
+
+- One agent owns one bounded job.
+- Written rules handle predictable work before a model is used.
+- Each result includes inspectable evidence and a saved run trace.
+- Humans approve, edit or reject every consequential action.
+
+## Main website
+
+- [Automutiny](https://automutiny.com/): AI implementation for mid-market firms.

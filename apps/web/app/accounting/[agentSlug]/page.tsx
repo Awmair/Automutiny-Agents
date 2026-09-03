@@ -3,12 +3,36 @@ import { accountingFilingReadinessScenarios } from "@automutiny/accounting-filin
 import { accountingTransactionReviewScenarios } from "@automutiny/accounting-transaction-review-agent";
 import { OperationalScenarioRunner } from "@automutiny/agent-ui";
 import { getAgentQueue } from "@automutiny/db";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { AgentQueuePage } from "../../../components/agent-queue-page";
 import { AgentWorkflowExplainer } from "../../../components/agent-workflow-explainer";
 import { operationalAgentByRoute, operationalWorkflows } from "../../../lib/operational-agents";
 
 export const dynamic = "force-dynamic";
+
+const descriptions: Record<string, string> = {
+  "accounting-document-chase":
+    "Test an AI document collection agent that tracks missing client records, prepares follow-up work and keeps accountant approval visible.",
+  "accounting-transaction-review":
+    "Test an AI transaction review agent that flags ledger exceptions, shows supporting evidence and returns posting decisions to accountants.",
+  "accounting-filing-readiness":
+    "Test an AI filing readiness agent that checks tax packages for missing records, failed gates and items requiring professional review.",
+};
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ agentSlug: string }>;
+}): Promise<Metadata> {
+  const agent = operationalAgentByRoute("accounting", (await params).agentSlug);
+  if (!agent?.id.startsWith("accounting-")) return {};
+  return {
+    title: `${agent.name} for Accounting Firms`,
+    description: descriptions[agent.id],
+    alternates: { canonical: agent.route },
+  };
+}
 
 function runner(agentId: string) {
   if (agentId === "accounting-document-chase") {

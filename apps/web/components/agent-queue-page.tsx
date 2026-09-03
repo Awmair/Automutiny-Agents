@@ -1,12 +1,16 @@
 import type { AgentQueue } from "@automutiny/db";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { absoluteUrl, ORGANIZATION_ID, WEBSITE_ID } from "../lib/seo";
+import { StructuredData } from "./structured-data";
 
 type AgentDetails = {
+  id: string;
   label: string;
   name: string;
   purpose: string;
   humanBoundary: string;
+  route: `/${string}`;
 };
 
 function ageLabel(createdAt: string) {
@@ -41,6 +45,23 @@ export function AgentQueuePage({
 }) {
   return (
     <div className="site-shell queue-site-shell">
+      <StructuredData
+        id={`${agent.id}-software-schema`}
+        data={{
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          "@id": `${absoluteUrl(agent.route)}#software`,
+          name: agent.name,
+          url: absoluteUrl(agent.route),
+          description: agent.purpose,
+          applicationCategory: "BusinessApplication",
+          operatingSystem: "Web",
+          isPartOf: { "@id": WEBSITE_ID },
+          publisher: { "@id": ORGANIZATION_ID },
+          audience: { "@type": "BusinessAudience", audienceType: organizationLabel },
+          featureList: [agent.purpose, `Human review boundary: ${agent.humanBoundary}`],
+        }}
+      />
       <header className="site-header">
         <div className="header-inner queue-header-inner">
           <Link className="brand" href="/" aria-label="Automutiny agents home">
@@ -64,7 +85,6 @@ export function AgentQueuePage({
         <section className="queue-hero">
           <div className="container queue-hero-grid">
             <div>
-              <p className="kicker">{agent.label} / Live queue</p>
               <h1>{agent.name}</h1>
               <p className="queue-lead">{agent.purpose}</p>
               {liveTestHref ? (
@@ -91,7 +111,6 @@ export function AgentQueuePage({
           <div className="container">
             <div className="queue-summary">
               <div>
-                <p className="kicker">Current work</p>
                 <h2 id="queue-title">Items waiting in this agent’s lane.</h2>
               </div>
               <div className="queue-summary-actions">

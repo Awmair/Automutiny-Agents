@@ -6,8 +6,10 @@ import { logisticsAgents } from "../../lib/operational-agents";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Logistics Agents",
-  description: "Lean AI agents for freight, logistics and transportation workflows.",
+  title: "AI Automation Agents for Logistics",
+  description:
+    "Test AI agents for load exceptions, POD verification and invoice reconciliation across freight and logistics operations.",
+  alternates: { canonical: "/logistics" },
 };
 
 export default async function LogisticsPage() {

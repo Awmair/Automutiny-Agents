@@ -12,7 +12,6 @@ export function AgentWorkflowExplainer({ workflow }: { workflow: AgentWorkflow }
       <div className="container">
         <header className="workflow-heading">
           <div>
-            <p className="kicker">Inside your business</p>
             <h2 id="agent-workflow-title">{workflow.heading}</h2>
           </div>
           <div className="workflow-heading-copy">

@@ -1,5 +1,6 @@
 import { getIntakeReviewDetail } from "@automutiny/intake-brief-agent";
 import { IntakeReviewPanel } from "@automutiny/intake-brief-agent/ui";
+import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -7,6 +8,10 @@ import { notFound } from "next/navigation";
 import { visitorSessionCookieName } from "../../../lib/visitor-session";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: true },
+};
 
 export default async function IntakeReviewRoute({
   params,

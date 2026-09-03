@@ -1,10 +1,18 @@
 import { getAgentQueue } from "@automutiny/db";
 import { intakeBriefAgent, intakeBriefWorkflow } from "@automutiny/intake-brief-agent";
 import { IntakeScenarioRunner } from "@automutiny/intake-brief-agent/ui";
+import type { Metadata } from "next";
 import { AgentQueuePage } from "../../components/agent-queue-page";
 import { AgentWorkflowExplainer } from "../../components/agent-workflow-explainer";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "AI Legal Intake Agent for Law Firms",
+  description:
+    "Test an AI legal intake agent that prepares inquiry briefs, applies firm rules, shows its evidence and returns legal decisions to staff.",
+  alternates: { canonical: "/intake" },
+};
 
 export default async function IntakeQueueRoute() {
   const queue = await getAgentQueue("intake-brief");

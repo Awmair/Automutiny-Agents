@@ -4,16 +4,19 @@ import { intakeBriefAgent } from "@automutiny/intake-brief-agent";
 import { stalledWorkAgent } from "@automutiny/stalled-work-agent";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { StructuredData } from "../../components/structured-data";
 import { configuredFirmName } from "../../lib/config";
+import { absoluteUrl, WEBSITE_ID } from "../../lib/seo";
 
 const agents = [intakeBriefAgent, documentRoutingAgent, stalledWorkAgent];
 
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Legal Agents",
+  title: "AI Agents for Law Firms",
   description:
-    "Three inspectable agents that prepare legal work and return every consequential choice to a person.",
+    "Test AI agents for legal intake, document routing and stalled matter review. Every consequential legal decision stays with a person.",
+  alternates: { canonical: "/legal" },
 };
 
 const operatingSteps = [
@@ -37,6 +40,28 @@ export default async function HomePage() {
 
   return (
     <div className="site-shell">
+      <StructuredData
+        id="legal-agent-collection-schema"
+        data={{
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "@id": `${absoluteUrl("/legal")}#collection`,
+          url: absoluteUrl("/legal"),
+          name: "AI Agents for Law Firms",
+          description:
+            "AI agents for legal intake, document routing and stalled matter review with human control over every consequential decision.",
+          isPartOf: { "@id": WEBSITE_ID },
+          about: { "@type": "Thing", name: "AI automation for law firms" },
+          mainEntity: {
+            "@type": "ItemList",
+            itemListElement: agents.map((agent, index) => ({
+              "@type": "ListItem",
+              position: index + 1,
+              item: { "@id": `${absoluteUrl(agent.route)}#software`, name: agent.name },
+            })),
+          },
+        }}
+      />
       <header className="site-header">
         <div className="header-inner">
           <Link className="brand" href="/" aria-label="Automutiny agents home">
@@ -83,7 +108,6 @@ export default async function HomePage() {
           <div className="hero-cloud" aria-hidden="true" />
           <div className="container hero-grid">
             <div className="hero-copy">
-              <p className="kicker">Automutiny / Legal</p>
               <h1 id="hero-title">Three legal agents. Real work. Human authority.</h1>
               <p className="hero-lead">
                 Three specialist agents prepare firm work, show their evidence and stop before a
@@ -156,7 +180,6 @@ export default async function HomePage() {
           <div className="container">
             <div className="split-head">
               <div>
-                <p className="kicker">The agent team</p>
                 <h2 id="agents-title">Three specialists. One standard of control.</h2>
               </div>
               <p>
@@ -210,7 +233,6 @@ export default async function HomePage() {
           <div className="container">
             <div className="split-head">
               <div>
-                <p className="kicker">Shared operating pattern</p>
                 <h2 id="process-title">One path makes every run explainable.</h2>
               </div>
               <p>
@@ -262,7 +284,6 @@ export default async function HomePage() {
         >
           <div className="container controls-grid">
             <div>
-              <p className="kicker">Firm controls</p>
               <h2 id="controls-title">Designed to stop at the right moment.</h2>
               <p className="controls-lead">
                 The useful part is not just what the agents can do. It is knowing what they cannot

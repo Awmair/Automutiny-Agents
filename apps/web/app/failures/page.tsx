@@ -1,4 +1,9 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: true },
+};
 
 const failures = [
   {
@@ -33,7 +38,6 @@ export default function FailuresPage() {
         </Link>
         <header className="failure-head">
           <div>
-            <p className="kicker">Failure lab</p>
             <h1>When the agent is uncertain, the system gets quieter.</h1>
           </div>
           <p>

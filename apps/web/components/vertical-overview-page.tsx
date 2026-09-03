@@ -1,5 +1,7 @@
 import type { AgentQueueId, AgentQueueSummary } from "@automutiny/db";
 import Link from "next/link";
+import { absoluteUrl, WEBSITE_ID } from "../lib/seo";
+import { StructuredData } from "./structured-data";
 
 type AgentDetails = {
   id: AgentQueueId;
@@ -38,6 +40,29 @@ export function VerticalOverviewPage({
 
   return (
     <div className="site-shell">
+      <StructuredData
+        id={`${slug}-agent-collection-schema`}
+        data={{
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "@id": `${absoluteUrl(`/${slug}`)}#collection`,
+          url: absoluteUrl(`/${slug}`),
+          name: `AI Automation Agents for ${
+            name === "Accounting" ? "Accounting Firms" : "Logistics"
+          }`,
+          description: businessProblem,
+          isPartOf: { "@id": WEBSITE_ID },
+          about: { "@type": "Thing", name: `AI automation for ${audience}` },
+          mainEntity: {
+            "@type": "ItemList",
+            itemListElement: agents.map((agent, index) => ({
+              "@type": "ListItem",
+              position: index + 1,
+              item: { "@id": `${absoluteUrl(agent.route)}#software`, name: agent.name },
+            })),
+          },
+        }}
+      />
       <header className="site-header">
         <div className="header-inner">
           <Link className="brand" href="/" aria-label="Automutiny agents home">
@@ -84,7 +109,6 @@ export function VerticalOverviewPage({
           <div className="hero-cloud" aria-hidden="true" />
           <div className="container hero-grid">
             <div className="hero-copy">
-              <p className="kicker">Automutiny / {name}</p>
               <h1 id={`${slug}-title`}>
                 Three {name.toLowerCase()} agents. Real work. Human authority.
               </h1>
@@ -160,7 +184,6 @@ export function VerticalOverviewPage({
           <div className="container">
             <div className="split-head">
               <div>
-                <p className="kicker">The agent team</p>
                 <h2 id={`${slug}-agents-title`}>Three specialists. One standard of control.</h2>
               </div>
               <p>
@@ -213,7 +236,6 @@ export function VerticalOverviewPage({
           <div className="container">
             <div className="split-head">
               <div>
-                <p className="kicker">Complete workflow</p>
                 <h2 id={`${slug}-process-title`}>
                   Every demo runs from records to a saved human decision.
                 </h2>

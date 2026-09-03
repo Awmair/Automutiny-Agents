@@ -1,5 +1,6 @@
 import { OperationalReviewPanel } from "@automutiny/agent-ui";
 import { getOperationalCaseDetail } from "@automutiny/db";
+import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -8,6 +9,10 @@ import { operationalAgentById } from "../../../lib/operational-agents";
 import { visitorSessionCookieName } from "../../../lib/visitor-session";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: true },
+};
 
 export default async function OperationalReviewRoute({
   params,

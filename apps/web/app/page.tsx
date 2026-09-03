@@ -1,4 +1,14 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: {
+    absolute: "AI Agents for Accounting, Legal and Logistics | Automutiny",
+  },
+  description:
+    "Explore nine live AI agents for accounting firms, law firms and logistics teams. Test focused workflows with visible evidence and human approval.",
+  alternates: { canonical: "/" },
+};
 
 const verticals = [
   {
@@ -71,7 +81,7 @@ export default function HomePage() {
             <Link href="/logistics">Logistics</Link>
           </nav>
           <a className="button button-small header-cta" href="#verticals">
-            Explore demos
+            Test live agents
           </a>
           <details className="mobile-menu">
             <summary aria-label="Open navigation">
@@ -83,7 +93,7 @@ export default function HomePage() {
               <Link href="/legal">Legal</Link>
               <Link href="/logistics">Logistics</Link>
               <a className="button" href="#verticals">
-                Explore demos
+                Test live agents
               </a>
             </nav>
           </details>
@@ -95,18 +105,17 @@ export default function HomePage() {
           <div className="hub-atmosphere" aria-hidden="true" />
           <div className="container hub-hero-grid">
             <div className="hub-copy">
-              <p className="kicker">Automutiny / Live agent demos</p>
               <h1 id="hub-title">
-                Lean agents that do real work.
+                AI agents for real business workflows.
                 <span>Humans stay in control.</span>
               </h1>
               <p className="hub-lead">
-                Cost-controlled AI agents built around real business workflows. They prepare the
-                work, show their evidence and return every important decision to a person.
+                Explore nine focused agents for repetitive operational work. Each one prepares the
+                task, shows its evidence and stops before a consequential decision.
               </p>
               <div className="hero-actions">
                 <a className="button" href="#verticals">
-                  Choose a vertical
+                  Choose an agent
                 </a>
                 <a className="text-link" href="#standard">
                   See our build standard <span aria-hidden="true">→</span>
@@ -119,34 +128,49 @@ export default function HomePage() {
               </section>
             </div>
 
-            <section className="vertical-console" aria-label="Target verticals">
-              <div className="console-topline">
-                <span>Agent portfolio / verticals</span>
-                <span className="system-state">Human controlled</span>
+            <section className="work-flow-visual" aria-label="How a focused AI agent works">
+              <div className="flow-track" aria-hidden="true">
+                <i />
               </div>
-              <div className="vertical-console-list">
-                {verticals.map((vertical) => (
-                  <Link
-                    className="vertical-console-row"
-                    href={`/${vertical.slug}`}
-                    key={vertical.slug}
-                  >
-                    <span className="console-number">{vertical.number}</span>
-                    <div>
-                      <strong>{vertical.name}</strong>
-                      <small>{vertical.audience}</small>
-                    </div>
-                    <span className="vertical-arrow" aria-hidden="true">
-                      →
-                    </span>
-                  </Link>
-                ))}
-              </div>
-              <div className="console-footer">
-                <span>Rules before prompts</span>
-                <span>Trace recording on</span>
-                <span>Final actions locked</span>
-              </div>
+              <ol>
+                <li className="flow-work">
+                  <span className="flow-icon" aria-hidden="true">
+                    ↻
+                  </span>
+                  <strong>Repetitive work</strong>
+                  <small>Collect · sort · check</small>
+                </li>
+                <li className="flow-agent">
+                  <span className="flow-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <title>AI agent</title>
+                      <rect x="6" y="6" width="12" height="12" rx="3" />
+                      <circle cx="12" cy="12" r="2.5" />
+                      <path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4" />
+                    </svg>
+                  </span>
+                  <strong>AI agent</strong>
+                  <small>Prepares and explains</small>
+                </li>
+                <li className="flow-review">
+                  <span className="flow-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <title>Human review</title>
+                      <circle cx="8.5" cy="8" r="3" />
+                      <path d="M3.5 19c.7-3.3 2.5-5 5-5 1.4 0 2.6.5 3.5 1.4M14.5 17l2.2 2.2 4-5" />
+                    </svg>
+                  </span>
+                  <strong>Human review</strong>
+                  <small>Approve · edit · reject</small>
+                </li>
+                <li className="flow-done">
+                  <span className="flow-icon" aria-hidden="true">
+                    ✓
+                  </span>
+                  <strong>Done</strong>
+                  <small>Decision recorded</small>
+                </li>
+              </ol>
             </section>
           </div>
         </section>
@@ -168,7 +192,6 @@ export default function HomePage() {
           <div className="container">
             <div className="split-head">
               <div>
-                <p className="kicker">Target verticals</p>
                 <h2 id="verticals-title">Choose the business you know.</h2>
               </div>
               <p>
@@ -209,7 +232,6 @@ export default function HomePage() {
           <div className="container">
             <div className="split-head">
               <div>
-                <p className="kicker">Our build standard</p>
                 <h2 id="standard-title">Useful before impressive.</h2>
               </div>
               <p>
@@ -250,7 +272,7 @@ export default function HomePage() {
             </a>
             <p>Lean, cost-controlled agents that do real work and return authority to humans.</p>
             <a className="button footer-button" href="#verticals">
-              Explore demos
+              Test live agents
             </a>
           </div>
           <nav aria-label="Industry links">
