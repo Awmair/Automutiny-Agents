@@ -4,9 +4,9 @@ import { accountingTransactionReviewScenarios } from "@automutiny/accounting-tra
 import { OperationalScenarioRunner } from "@automutiny/agent-ui";
 import { getAgentQueue } from "@automutiny/db";
 import { notFound } from "next/navigation";
-
 import { AgentQueuePage } from "../../../components/agent-queue-page";
-import { operationalAgentByRoute } from "../../../lib/operational-agents";
+import { AgentWorkflowExplainer } from "../../../components/agent-workflow-explainer";
+import { operationalAgentByRoute, operationalWorkflows } from "../../../lib/operational-agents";
 
 export const dynamic = "force-dynamic";
 
@@ -48,6 +48,8 @@ export default async function AccountingAgentRoute({
 }) {
   const agent = operationalAgentByRoute("accounting", (await params).agentSlug);
   if (!agent?.id.startsWith("accounting-")) notFound();
+  const workflow = operationalWorkflows.get(agent.id);
+  if (!workflow) notFound();
   const queue = await getAgentQueue(agent.id);
   return (
     <AgentQueuePage
@@ -56,7 +58,9 @@ export default async function AccountingAgentRoute({
       organizationLabel="Accounting operations"
       backHref="/accounting"
       backLabel="Accounting agents"
+      liveTestHref="#test-live"
     >
+      <AgentWorkflowExplainer workflow={workflow} />
       {runner(agent.id)}
     </AgentQueuePage>
   );

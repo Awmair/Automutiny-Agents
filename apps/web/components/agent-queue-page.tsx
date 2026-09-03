@@ -29,6 +29,7 @@ export function AgentQueuePage({
   organizationLabel = "Briar & Calder LLP",
   backHref = "/legal",
   backLabel = "Legal agents",
+  liveTestHref,
 }: {
   agent: AgentDetails;
   queue: AgentQueue;
@@ -36,6 +37,7 @@ export function AgentQueuePage({
   organizationLabel?: string;
   backHref?: string;
   backLabel?: string;
+  liveTestHref?: string;
 }) {
   return (
     <div className="site-shell queue-site-shell">
@@ -65,6 +67,16 @@ export function AgentQueuePage({
               <p className="kicker">{agent.label} / Live queue</p>
               <h1>{agent.name}</h1>
               <p className="queue-lead">{agent.purpose}</p>
+              {liveTestHref ? (
+                <div className="queue-hero-actions">
+                  <a className="button" href={liveTestHref}>
+                    Test it live
+                  </a>
+                  <a className="text-link" href="#queue-title">
+                    View the live queue <span aria-hidden="true">→</span>
+                  </a>
+                </div>
+              ) : null}
             </div>
             <aside className="queue-boundary">
               <span>What stays human</span>
@@ -82,15 +94,22 @@ export function AgentQueuePage({
                 <p className="kicker">Current work</p>
                 <h2 id="queue-title">Items waiting in this agent’s lane.</h2>
               </div>
-              <div className="queue-metrics">
-                <div>
-                  <strong>{queue.items.length}</strong>
-                  <span>in queue</span>
+              <div className="queue-summary-actions">
+                <div className="queue-metrics">
+                  <div>
+                    <strong>{queue.items.length}</strong>
+                    <span>in queue</span>
+                  </div>
+                  <div>
+                    <strong>{queue.awaitingReview}</strong>
+                    <span>need human review</span>
+                  </div>
                 </div>
-                <div>
-                  <strong>{queue.awaitingReview}</strong>
-                  <span>need human review</span>
-                </div>
+                {liveTestHref ? (
+                  <a className="button button-small" href={liveTestHref}>
+                    Test it live
+                  </a>
+                ) : null}
               </div>
             </div>
 
@@ -142,13 +161,18 @@ export function AgentQueuePage({
         </section>
 
         <section className="queue-connection">
-          <div className="container queue-connection-grid">
+          <div className={`container queue-connection-grid${liveTestHref ? " has-live-cta" : ""}`}>
             <span>How it connects</span>
             <p>
               Supabase stores the workflow records. The server reads only this agent’s lane and
               turns it into the queue above. Completed rows open this agent’s compact owner view and
               inspectable run trace.
             </p>
+            {liveTestHref ? (
+              <a className="button button-small queue-connection-cta" href={liveTestHref}>
+                Test it live
+              </a>
+            ) : null}
           </div>
         </section>
       </main>

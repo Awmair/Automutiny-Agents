@@ -5,6 +5,7 @@ export { runStalledWork } from "./run";
 export type { StalledItemReview } from "./schemas";
 export { StalledItemReviewSchema, StalledRunInputSchema } from "./schemas";
 export { submitStalledRun } from "./submit";
+export { stalledWorkWorkflow } from "./workflow";
 
 export const stalledWorkAgent = defineAgent({
   id: "stalled-work",

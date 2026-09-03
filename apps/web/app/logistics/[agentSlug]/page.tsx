@@ -1,12 +1,12 @@
-import { getAgentQueue } from "@automutiny/db";
 import { OperationalScenarioRunner } from "@automutiny/agent-ui";
+import { getAgentQueue } from "@automutiny/db";
 import { logisticsInvoiceReconciliationScenarios } from "@automutiny/logistics-invoice-reconciliation-agent";
 import { logisticsLoadExceptionScenarios } from "@automutiny/logistics-load-exception-agent";
 import { logisticsPodVerificationScenarios } from "@automutiny/logistics-pod-verification-agent";
 import { notFound } from "next/navigation";
-
 import { AgentQueuePage } from "../../../components/agent-queue-page";
-import { operationalAgentByRoute } from "../../../lib/operational-agents";
+import { AgentWorkflowExplainer } from "../../../components/agent-workflow-explainer";
+import { operationalAgentByRoute, operationalWorkflows } from "../../../lib/operational-agents";
 
 export const dynamic = "force-dynamic";
 
@@ -48,6 +48,8 @@ export default async function LogisticsAgentRoute({
 }) {
   const agent = operationalAgentByRoute("logistics", (await params).agentSlug);
   if (!agent?.id.startsWith("logistics-")) notFound();
+  const workflow = operationalWorkflows.get(agent.id);
+  if (!workflow) notFound();
   const queue = await getAgentQueue(agent.id);
   return (
     <AgentQueuePage
@@ -56,7 +58,9 @@ export default async function LogisticsAgentRoute({
       organizationLabel="Freight operations"
       backHref="/logistics"
       backLabel="Logistics agents"
+      liveTestHref="#test-live"
     >
+      <AgentWorkflowExplainer workflow={workflow} />
       {runner(agent.id)}
     </AgentQueuePage>
   );

@@ -133,7 +133,8 @@ p {
 
 #agents,
 #process,
-#controls {
+#controls,
+#test-live {
   scroll-margin-top: 100px;
 }
 
@@ -1202,6 +1203,13 @@ p {
   line-height: 1.65;
 }
 
+.queue-hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 30px;
+}
+
 .queue-boundary {
   border-top: 2px solid var(--color-oxblood);
   background: rgb(250 249 246 / 70%);
@@ -1224,6 +1232,281 @@ p {
   line-height: 1.6;
 }
 
+.agent-workflow {
+  padding: 78px 0;
+  border-top: 1px solid var(--color-rule);
+  background: var(--color-card);
+}
+
+.workflow-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.65fr);
+  gap: clamp(44px, 8vw, 112px);
+  align-items: end;
+}
+
+.workflow-heading h2 {
+  max-width: 720px;
+}
+
+.workflow-heading-copy > p {
+  margin: 0;
+  color: var(--color-ink-2);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.workflow-heading-copy .text-link {
+  margin-top: 18px;
+  color: var(--color-oxblood);
+}
+
+.business-flow {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  margin: 44px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.business-flow::before {
+  position: absolute;
+  z-index: 0;
+  top: 23px;
+  right: 8%;
+  left: 8%;
+  height: 1px;
+  background: var(--color-rule);
+  content: "";
+}
+
+.business-flow::after {
+  position: absolute;
+  z-index: 2;
+  top: 18px;
+  left: 7%;
+  width: 11px;
+  height: 11px;
+  border: 2px solid var(--color-card);
+  border-radius: 50%;
+  background: var(--color-oxblood);
+  box-shadow: 0 0 0 3px rgb(125 38 52 / 14%);
+  content: "";
+  animation: business-flow-packet 5.4s var(--ease) 450ms 1 both;
+}
+
+.business-flow li {
+  position: relative;
+  z-index: 1;
+  min-height: 154px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border: 1px solid var(--color-rule);
+  border-radius: 18px;
+  background: rgb(250 249 246 / 92%);
+  padding: 15px;
+  box-shadow: 0 20px 50px -44px rgb(18 18 20 / 46%);
+}
+
+.business-flow-number {
+  width: 46px;
+  height: 18px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-pill);
+  background: var(--color-ink);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.08em;
+}
+
+.business-flow li strong {
+  margin-top: 34px;
+  font-size: 15px;
+  font-weight: 550;
+  letter-spacing: -0.015em;
+}
+
+.business-flow li small {
+  margin-top: 7px;
+  color: var(--color-ink-2);
+  font-family: var(--font-serif);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.workflow-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+  padding: 0;
+  list-style: none;
+}
+
+.workflow-controls li {
+  border: 1px solid rgb(32 103 71 / 18%);
+  border-radius: var(--r-pill);
+  background: var(--color-positive-soft);
+  padding: 7px 11px;
+  color: var(--color-positive);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+}
+
+.technical-wiring {
+  overflow: hidden;
+  margin-top: 22px;
+  border: 1px solid var(--color-rule);
+  border-radius: 20px;
+  background: var(--color-paper-2);
+}
+
+.technical-wiring summary {
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 17px 20px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.technical-wiring summary::-webkit-details-marker {
+  display: none;
+}
+
+.technical-wiring summary > span {
+  display: grid;
+  gap: 2px;
+}
+
+.technical-wiring summary strong {
+  font-size: 14px;
+  font-weight: 550;
+}
+
+.technical-wiring summary small {
+  color: var(--color-ink-2);
+  font-family: var(--font-serif);
+  font-size: 12px;
+}
+
+.technical-wiring summary i {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--color-ink);
+  color: #fff;
+  font-style: normal;
+  transition: transform 180ms var(--ease);
+}
+
+.technical-wiring[open] summary i {
+  transform: rotate(45deg);
+}
+
+.technical-wiring-body {
+  border-top: 1px solid var(--color-rule);
+  padding: 22px 20px 20px;
+}
+
+.technical-wiring-label {
+  margin: 0 0 15px;
+  color: var(--color-oxblood);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.technical-wiring ol {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 1px;
+  margin: 0;
+  border: 1px solid var(--color-rule);
+  border-radius: 14px;
+  padding: 0;
+  overflow: hidden;
+  background: var(--color-rule);
+  list-style: none;
+}
+
+.technical-wiring li {
+  min-height: 128px;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-card);
+  padding: 13px;
+}
+
+.technical-wiring li > span {
+  color: var(--color-oxblood);
+  font-family: var(--font-mono);
+  font-size: 8px;
+}
+
+.technical-wiring li strong {
+  margin-top: 26px;
+  font-size: 12px;
+  font-weight: 550;
+  line-height: 1.35;
+}
+
+.technical-wiring li small {
+  margin-top: 6px;
+  color: var(--color-ink-2);
+  font-family: var(--font-serif);
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.technical-wiring-note {
+  max-width: 900px;
+  margin: 17px 0 0;
+  color: var(--color-ink-2);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.technical-wiring-cta {
+  margin-top: 3px;
+  color: var(--color-oxblood);
+}
+
+@keyframes business-flow-packet {
+  0% {
+    left: 7%;
+    opacity: 0;
+  }
+  6% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+  }
+  100% {
+    left: 92%;
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .business-flow::after {
+    display: none;
+  }
+}
+
 .queue-workspace {
   padding: 82px 0 100px;
   background: var(--color-paper-2);
@@ -1238,6 +1521,16 @@ p {
 
 .queue-summary h2 {
   max-width: 650px;
+}
+
+.queue-summary-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.queue-summary-actions > .button {
+  white-space: nowrap;
 }
 
 .queue-metrics {
@@ -1389,6 +1682,17 @@ p {
   grid-template-columns: 0.45fr 1.55fr;
   gap: 50px;
   align-items: start;
+}
+
+.queue-connection-grid.has-live-cta {
+  grid-template-columns: 0.4fr 1.35fr auto;
+  align-items: center;
+}
+
+.queue-connection-cta {
+  background: var(--color-oxblood);
+  box-shadow: none;
+  white-space: nowrap;
 }
 
 .queue-connection span {
@@ -2423,6 +2727,10 @@ p {
     grid-template-columns: 1fr;
     gap: 12px;
   }
+
+  .technical-wiring ol {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 820px) {
@@ -2506,9 +2814,14 @@ p {
 
   .split-head,
   .controls-grid,
-  .overview-hero-grid {
+  .overview-hero-grid,
+  .workflow-heading {
     grid-template-columns: 1fr;
     gap: 28px;
+  }
+
+  .technical-wiring ol {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .agent-grid,
@@ -2549,6 +2862,7 @@ p {
 
   .queue-hero-grid,
   .queue-connection-grid,
+  .queue-connection-grid.has-live-cta,
   .scenario-grid,
   .detail-hero-grid,
   .cockpit-overview {
@@ -2592,6 +2906,12 @@ p {
   .queue-summary {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .queue-summary-actions {
+    width: 100%;
+    align-items: stretch;
+    flex-wrap: wrap;
   }
 
   .connection-map {
@@ -2639,6 +2959,38 @@ p {
 
   .queue-workspace {
     padding: 66px 0 78px;
+  }
+
+  .queue-hero-actions {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .agent-workflow {
+    padding: 62px 0;
+  }
+
+  .business-flow {
+    grid-auto-columns: minmax(224px, 78vw);
+    grid-auto-flow: column;
+    grid-template-columns: none;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scroll-snap-type: x proximity;
+  }
+
+  .business-flow::before,
+  .business-flow::after {
+    display: none;
+  }
+
+  .business-flow li {
+    scroll-snap-align: start;
+  }
+
+  .technical-wiring ol {
+    grid-template-columns: 1fr;
   }
 
   .scenario-section {
@@ -2690,6 +3042,10 @@ p {
 
   .queue-metrics {
     width: 100%;
+  }
+
+  .queue-summary-actions {
+    flex-direction: column;
   }
 
   .queue-metrics div {

@@ -7,6 +7,7 @@ export { documentScenarios } from "./scenarios";
 export type { DocumentReviewInput } from "./schemas";
 export { DocumentReviewInputSchema } from "./schemas";
 export { submitDocument } from "./submit";
+export { documentRoutingWorkflow } from "./workflow";
 
 export const documentRoutingAgent = defineAgent({
   id: "document-routing",

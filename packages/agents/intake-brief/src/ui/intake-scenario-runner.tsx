@@ -64,10 +64,10 @@ export function IntakeScenarioRunner() {
   }
 
   return (
-    <section className="scenario-section" aria-labelledby="scenario-title">
+    <section className="scenario-section" id="test-live" aria-labelledby="scenario-title">
       <div className="container scenario-grid">
         <div className="scenario-intro">
-          <p className="kicker">Run Agent 1</p>
+          <p className="kicker">Test Agent 1 live</p>
           <h2 id="scenario-title">Send an inquiry through the full intake path.</h2>
           <p>
             Pick a prepared situation or enter your own. The agent will create a lead, apply the
@@ -164,7 +164,7 @@ export function IntakeScenarioRunner() {
 
           <div className="scenario-submit">
             <button className="button" type="submit" disabled={status === "running"}>
-              {status === "running" ? "Agent working…" : "Run Intake Agent"}
+              {status === "running" ? "Agent working…" : "Run Live Intake Agent"}
             </button>
             <p className={`run-message ${status}`} aria-live="polite">
               {message || "Up to 10 runs per visitor each day."}

@@ -37,10 +37,10 @@ export function OperationalScenarioRunner({
   }
 
   return (
-    <section className="scenario-section operations-runner">
+    <section className="scenario-section operations-runner" id="test-live">
       <div className="container scenario-grid">
         <div className="scenario-intro">
-          <p className="kicker">Run the agent</p>
+          <p className="kicker">Test the agent live</p>
           <h2>Take one record set through the full workflow.</h2>
           <p>The rules do the predictable work. Every final action still waits for a person.</p>
           <div className="scenario-path">
@@ -74,7 +74,7 @@ export function OperationalScenarioRunner({
           </div>
           <div className="scenario-submit">
             <button className="button" type="button" onClick={run} disabled={status === "running"}>
-              {status === "running" ? "Agent working..." : "Run complete workflow"}
+              {status === "running" ? "Agent working..." : "Run live workflow"}
             </button>
             <p className={`run-message ${status}`} aria-live="polite">
               {message}

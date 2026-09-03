@@ -5,6 +5,8 @@ import {
 } from "@automutiny/agent-runtime";
 import type { OperationalOutput, SupabaseClient } from "@automutiny/db";
 
+export { logisticsPodVerificationWorkflow } from "./workflow";
+
 export type PodVerificationInput = Record<string, unknown> & {
   load_id: string;
   customer: string;

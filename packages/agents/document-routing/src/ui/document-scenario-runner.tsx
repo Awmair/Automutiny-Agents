@@ -26,10 +26,10 @@ export function DocumentScenarioRunner() {
     }
   }
   return (
-    <section className="scenario-section">
+    <section className="scenario-section" id="test-live">
       <div className="container scenario-grid compact-runner">
         <div className="scenario-intro">
-          <p className="kicker">Run Agent 2</p>
+          <p className="kicker">Test Agent 2 live</p>
           <h2>Put a PDF through the full routing path.</h2>
           <p>
             Text is extracted, Qwen classifies it, firm rules check the match and completeness, then
@@ -70,7 +70,7 @@ export function DocumentScenarioRunner() {
           </label>
           <div className="scenario-submit">
             <button className="button" type="button" onClick={run} disabled={running}>
-              {running ? "Agent working..." : "Run Document Agent"}
+              {running ? "Agent working..." : "Run Live Document Agent"}
             </button>
             <p className="run-message">{message}</p>
           </div>

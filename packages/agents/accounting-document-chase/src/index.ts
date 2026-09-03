@@ -5,6 +5,8 @@ import {
 } from "@automutiny/agent-runtime";
 import type { OperationalOutput, SupabaseClient } from "@automutiny/db";
 
+export { accountingDocumentChaseWorkflow } from "./workflow";
+
 export type DocumentChaseInput = Record<string, unknown> & {
   client: string;
   engagement: string;

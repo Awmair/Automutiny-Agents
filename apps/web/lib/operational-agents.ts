@@ -1,27 +1,33 @@
 import {
   accountingDocumentChaseAgent,
+  accountingDocumentChaseWorkflow,
   submitAccountingDocumentChase,
 } from "@automutiny/accounting-document-chase-agent";
 import {
   accountingFilingReadinessAgent,
+  accountingFilingReadinessWorkflow,
   submitAccountingFilingReadiness,
 } from "@automutiny/accounting-filing-readiness-agent";
 import {
   accountingTransactionReviewAgent,
+  accountingTransactionReviewWorkflow,
   submitAccountingTransactionReview,
 } from "@automutiny/accounting-transaction-review-agent";
 import type { AgentDefinition } from "@automutiny/agent-runtime";
 import type { OperationalAgentId, SupabaseClient } from "@automutiny/db";
 import {
   logisticsInvoiceReconciliationAgent,
+  logisticsInvoiceReconciliationWorkflow,
   submitLogisticsInvoiceReconciliation,
 } from "@automutiny/logistics-invoice-reconciliation-agent";
 import {
   logisticsLoadExceptionAgent,
+  logisticsLoadExceptionWorkflow,
   submitLogisticsLoadException,
 } from "@automutiny/logistics-load-exception-agent";
 import {
   logisticsPodVerificationAgent,
+  logisticsPodVerificationWorkflow,
   submitLogisticsPodVerification,
 } from "@automutiny/logistics-pod-verification-agent";
 
@@ -38,6 +44,23 @@ export const logisticsAgents = [
 ] as const;
 
 export const operationalAgents = [...accountingAgents, ...logisticsAgents] as const;
+
+type OperationalWorkflow = {
+  heading: string;
+  intro: string;
+  businessFlow: readonly (readonly [string, string])[];
+  technicalFlow: readonly (readonly [string, string])[];
+  usesModel: boolean;
+};
+
+export const operationalWorkflows = new Map<string, OperationalWorkflow>([
+  [accountingDocumentChaseAgent.id, accountingDocumentChaseWorkflow],
+  [accountingTransactionReviewAgent.id, accountingTransactionReviewWorkflow],
+  [accountingFilingReadinessAgent.id, accountingFilingReadinessWorkflow],
+  [logisticsLoadExceptionAgent.id, logisticsLoadExceptionWorkflow],
+  [logisticsPodVerificationAgent.id, logisticsPodVerificationWorkflow],
+  [logisticsInvoiceReconciliationAgent.id, logisticsInvoiceReconciliationWorkflow],
+]);
 
 export function operationalAgentById(agentId: string): AgentDefinition | null {
   return operationalAgents.find((agent) => agent.id === agentId) ?? null;

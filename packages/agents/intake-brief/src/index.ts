@@ -21,6 +21,7 @@ export {
 } from "./schemas";
 export { submitIntake } from "./submit";
 export type { ContextBundle, IntakeReviewDetail, RunIntakeResult } from "./types";
+export { intakeBriefWorkflow } from "./workflow";
 
 export const intakeBriefAgent = defineAgent({
   id: "intake-brief",

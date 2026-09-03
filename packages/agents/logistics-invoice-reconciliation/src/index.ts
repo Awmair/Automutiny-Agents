@@ -5,6 +5,8 @@ import {
 } from "@automutiny/agent-runtime";
 import type { OperationalOutput, SupabaseClient } from "@automutiny/db";
 
+export { logisticsInvoiceReconciliationWorkflow } from "./workflow";
+
 type Charge = { label: string; quoted: number; invoiced: number; approved: boolean };
 
 export type InvoiceReconciliationInput = Record<string, unknown> & {

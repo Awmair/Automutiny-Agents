@@ -5,6 +5,8 @@ import {
 } from "@automutiny/agent-runtime";
 import type { OperationalOutput, SupabaseClient } from "@automutiny/db";
 
+export { logisticsLoadExceptionWorkflow } from "./workflow";
+
 export type LoadExceptionInput = Record<string, unknown> & {
   load_id: string;
   customer: string;

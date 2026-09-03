@@ -5,6 +5,8 @@ import {
 } from "@automutiny/agent-runtime";
 import type { OperationalOutput, SupabaseClient } from "@automutiny/db";
 
+export { accountingTransactionReviewWorkflow } from "./workflow";
+
 type Transaction = {
   id: string;
   description: string;

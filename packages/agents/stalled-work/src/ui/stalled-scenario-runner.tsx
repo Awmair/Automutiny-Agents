@@ -24,10 +24,10 @@ export function StalledScenarioRunner() {
     }
   }
   return (
-    <section className="scenario-section">
+    <section className="scenario-section" id="test-live">
       <div className="container scenario-grid compact-runner">
         <div className="scenario-intro">
-          <p className="kicker">Run Agent 3</p>
+          <p className="kicker">Test Agent 3 live</p>
           <h2>Scan the firm and prepare Monday’s owner brief.</h2>
           <p>
             Database rules detect risk. Qwen ranks and explains it. Every follow-up still waits for
@@ -54,7 +54,7 @@ export function StalledScenarioRunner() {
           </label>
           <div className="scenario-submit">
             <button className="button" type="button" onClick={run} disabled={running}>
-              {running ? "Agent working..." : "Run Stalled Work Agent"}
+              {running ? "Agent working..." : "Run Live Stalled Work Agent"}
             </button>
             <p className="run-message">{message}</p>
           </div>
