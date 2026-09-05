@@ -261,7 +261,8 @@ export function VerticalOverviewPage({
       <footer className="site-footer overview-footer">
         <div className="container footer-meta">
           <span>Automutiny {name} Agents</span>
-          <span>Agents prepare. Humans decide.</span>
+          <a href="https://automutiny.com/case-studies/">Implementation examples</a>
+          <a href="https://automutiny.com/services/">Implementation scope and next steps</a>
         </div>
       </footer>
     </div>

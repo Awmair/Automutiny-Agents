@@ -43,6 +43,13 @@ export function AgentQueuePage({
   backLabel?: string;
   liveTestHref?: string;
 }) {
+  const guideUrl =
+    backHref === "/logistics"
+      ? "https://automutiny.com/guides/shipment-exception-management-automation/"
+      : backHref === "/accounting"
+        ? "https://automutiny.com/guides/ai-automation-for-accounting-firms/"
+        : "https://automutiny.com/guides/law-firm-ai-automation/";
+
   return (
     <div className="site-shell queue-site-shell">
       <StructuredData
@@ -195,6 +202,13 @@ export function AgentQueuePage({
           </div>
         </section>
       </main>
+      <footer className="site-footer overview-footer">
+        <nav className="container footer-meta" aria-label="Implementation resources">
+          <a href={guideUrl}>Read the workflow guide</a>
+          <a href="https://automutiny.com/case-studies/">Implementation examples</a>
+          <a href="https://automutiny.com/services/">Implementation scope and next steps</a>
+        </nav>
+      </footer>
     </div>
   );
 }
